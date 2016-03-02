@@ -42,6 +42,21 @@ angular.module('multirun.controller', [])
     return !$scope.waiting && !$scope.raceStarted;
   };
 
+  $scope.checkUserCancelled = function () {
+    MultiGame.getGame(session.gameId)
+      .then(function (game) {
+        if (game.cancelled) {
+          MultiGame.removeGame(session.id);
+          $interval.cancel(stopCheck);
+          $interval.cancel(stopFinish);
+          $interval.cancel(statusUpdateLoop);
+          $location.path('/');
+        }
+      });
+  };
+
+  var checkCancelled = $interval($scope.checkUserCancelled, 300);
+
   // Activated when user presses the check button. In multiplayer game database
   // instance, the current user field is set to true
   // (either "user1" or "user2", see above)
@@ -79,8 +94,8 @@ angular.module('multirun.controller', [])
   };
 
   $scope.endRaceBeforeStart = function () {
-    MultiGame.removeGame(session.id);
     $interval.cancel(stopCheck);
+    MultiGame.updateGame(session.gameId, 'cancelled');
   };
 
   // End multiplayer block
@@ -133,6 +148,7 @@ angular.module('multirun.controller', [])
       MultiGame.updateGame(session.gameId, 'won');
     }
     ////////////////////////////////////////////////////////////////////////////
+    $interval.cancel(checkCancelled);
 
     $scope.$parent.runTime = runTime.format('mm:ss');
     var medal = $scope.$parent.achievement = $scope.currentMedal;
@@ -218,5 +234,7 @@ angular.module('multirun.controller', [])
   // Does this make sure to stop tracking if they close the window? --> all scripts die when the browser is no longer interpreting them
   $scope.$on('$destroy', function () {
     $interval.cancel(statusUpdateLoop);
+    $interval.cancel(checkCancelled);
+    MultiGame.updateGame(session.gameId, 'cancelled');
   });
 });
