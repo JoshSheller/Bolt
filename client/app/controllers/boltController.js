@@ -8,10 +8,11 @@ angular.module('bolt.controller', [])
       // Solo run
       $location.path('/run');
     } else if (document.getElementById("switch_3_center").checked) {
+      $location.path('/friendList');
       // Running with friends has not been implemented yet, this is a
       // placeholder for when this functionality has been developed.
       // For now redirect runners to solo run.
-      $location.path('/run');
+      // $location.path('/run');
     } else {
       // Public run
       $location.path('/multiLoad');

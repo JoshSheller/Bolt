@@ -21,20 +21,25 @@ angular.module('bolt.services', [])
         console.error(err);
       });
     var makeMap = function (currentLatLngObj, $scope) {
+      //find random destination coordinates, an obj with {lat:latval, lng: lngval}
       var destinationCoordinates = destination ||
           randomCoordsAlongCircumference(currentLatLngObj, session.preferredDistance);
+          //create a map within the div with the id 'map'
       mainMap = new google.maps.Map(document.getElementById('map'), {
         center: new google.maps.LatLng(currentLatLngObj.lat, currentLatLngObj.lng),
         zoom: 13,
         disableDefaultUI: true
       });
+      //get the directions
       directionsRenderer.setMap(mainMap);
+      //put down marker
       currentLocMarker = new google.maps.Marker({
         position: new google.maps.LatLng(currentLatLngObj.lat, currentLatLngObj.lng),
         map: mainMap,
         animation: google.maps.Animation.DROP,
         icon: '/assets/bolt.png'
       });
+      //set the start/end routes, based on the current location and the destination
       var startOfRoute = new google.maps.LatLng(currentLocMarker.position.lat(), currentLocMarker.position.lng());
       var endOfRoute = new google.maps.LatLng(destinationCoordinates.lat, destinationCoordinates.lng);
       $scope.destination = {
@@ -52,8 +57,10 @@ angular.module('bolt.services', [])
         var totalDistance = 0;
         // Add up distance for all legs of the journey
         for (var i = 0; i < response.routes[0].legs.length; i++) {
+          //distance is a human-readable string.
           var distance = response.routes[0].legs[i].distance.text;
           if (distance.substring(distance.length - 2) === "ft") {
+            //convert the distance from feet to miles
             distance = (distance.substring(0, distance.length - 3) / 5280).toString().substring(0, 3) + " mi";
           }
           totalDistance += distance;
@@ -223,6 +230,7 @@ angular.module('bolt.services', [])
     },
 
     updateGame : function (id, field) {
+      //field is equal to either user1 or user2
       return $http({
         method: 'POST',
         url: '/api/games/update',

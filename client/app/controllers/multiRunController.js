@@ -49,6 +49,7 @@ angular.module('multirun.controller', [])
   $scope.ready = function () {
     $scope.waiting = true;
     // Update database to indicate that user is ready
+    // session = $window.localStorage
     MultiGame.updateGame(session.gameId, userNum).then(function (game) {});
     stopCheck = $interval($scope.checkOppReady, 300);
   };

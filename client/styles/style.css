@@ -199,6 +199,13 @@ body{
   text-align: center;
 }
 
+.titleMessage {
+  margin-top: 1em;
+  font-size: 4em;
+  color: black;
+  text-align: center;
+}
+
 .buttonContainer {
   margin-top: 10vh;
   width: 100%;
@@ -295,4 +302,12 @@ body{
 
 [type="radio"].with-gap:checked+label:before {
     border: 2px solid white;
+}
+
+.greenCircle {
+  background-color: green;
+  border-radius: 99em;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 1em;
 }
