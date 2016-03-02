@@ -31,18 +31,18 @@ angular.module('multiload.controller', ['bolt.profile'])
       // create a session out of the two users' usernames
       if (key !== session.username) {
         var id = [session.username, key].sort().join('');
-        var user1 = {
-          name: session.username,
-          ready: false,
-          canceled: false,
-          finished: false
-        };
-        var user2 = {
-          name: key,
-          ready: false,
-          canceled: false,
-          finished: false
-        };
+        // var user1 = {
+        //   name: session.username,
+        //   ready: false,
+        //   canceled: false,
+        //   finished: false
+        // };
+        // var user2 = {
+        //   name: key,
+        //   ready: false,
+        //   canceled: false,
+        //   finished: false
+        // };
 
         // This calculation should be placed in a factory
         var destinationLat = (userPosition.coords.latitude + location[0]) / 2;

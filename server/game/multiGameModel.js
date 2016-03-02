@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 // Define mongo schema
 var MultiGameSchema = new mongoose.Schema({
-  user1: Object,
-  user2: Object,
+  // user1: Object,
+  // user2: Object,
   active: Boolean,
   id: {
     type: String,
@@ -18,10 +18,10 @@ var MultiGameSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  // canceled is a boolean that states whether one of the users has
+  // cancelled is a boolean that states whether one of the users has
   // cancled during a multiplayer match. The current application does not
   // consider this boolean and needs to be implemented.
-  canceled: {
+  cancelled: {
     type: Boolean,
     default: false
   },
