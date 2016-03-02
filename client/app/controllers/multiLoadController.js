@@ -3,7 +3,12 @@ angular.module('multiload.controller', ['bolt.profile'])
 
 .controller('MultiLoadController', function ($window, $scope, Multi) {
   $scope.session = $window.localStorage;
+  $scope.showCancel = false;
   Multi.addUserGeoFire();
+
+  setTimeout( function () {
+    $scope.showCancel = true;
+  }, 3500);
 
   $scope.cancelSearch = function () {
     Multi.cancelSearch();
@@ -11,8 +16,8 @@ angular.module('multiload.controller', ['bolt.profile'])
 })
 
 .factory('Multi', function ($window, $location, $interval, Profile, MultiGame) {
-  var session = $window.localStorage;
   // Connect your own firebase account in this line
+  var session = $window.localStorage;
   var firebaseRef = new Firebase("https://glowing-fire-8101.firebaseio.com/");
   var geoFire = new GeoFire(firebaseRef);
   var currentUser;
@@ -69,6 +74,7 @@ angular.module('multiload.controller', ['bolt.profile'])
     stop = $interval(function () {
       search(geoQuery);
     }, 2000);
+
   };
 
   // Make user findable in the database
