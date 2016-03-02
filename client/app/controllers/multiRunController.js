@@ -77,6 +77,12 @@ angular.module('multirun.controller', [])
         }
       });
   };
+
+  $scope.endRaceBeforeStart = function () {
+    MultiGame.removeGame(session.id);
+    $interval.cancel(stopCheck);
+  };
+
   // End multiplayer block
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -198,6 +204,7 @@ angular.module('multirun.controller', [])
   var distBetween = function (loc1, loc2) {
     return sqrt(pow2(loc1.lat - loc2.lat) + pow2(loc1.lng - loc2.lng));
   };
+
 
   // Update geographical location and timers
   var updateStatus = function () {
