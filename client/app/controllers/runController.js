@@ -151,10 +151,9 @@ angular.module('run.controller', [])
 
   // Update geographical location and timers
   var updateStatus = function () {
-    $scope.percentComplete++;
-    // var prevPosition = $scope.userLocation;
+    var prevPosition = $scope.userLocation;
     Geo.updateCurrentPosition($scope);
-    // $scope.percentComplete = calculatePercentageRouteRun(prevPosition, $scope.userLocation);
+    $scope.percentComplete = calculatePercentageRouteRun(prevPosition, $scope.userLocation);
     updateTotalRunTime();
     Run.updateGoalTimes($scope);
     checkIfFinished();
