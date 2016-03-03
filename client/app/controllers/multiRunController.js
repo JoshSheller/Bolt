@@ -24,6 +24,7 @@ angular.module('multirun.controller', [])
   $scope.oppFinished = false;
   var stopCheck;
   var stopFinish;
+  var statusUpdateLoop;
   var userNum;
   var oppNum;
 
