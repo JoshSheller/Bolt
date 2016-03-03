@@ -7,6 +7,7 @@ angular.module('run.controller', [])
   $scope.userLocation;
   $scope.destination;
   $scope.hasHours = true;
+  $scope.percentComplete = '50%';
 
   var startTime;
   var runTime;
