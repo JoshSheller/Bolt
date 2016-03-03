@@ -51,7 +51,7 @@ angular.module('multiload.controller', ['bolt.profile'])
         geoFire.remove(key).then(function () {});
         $interval.cancel(stop);
         geoQuery.cancel();
-        MultiGame.makeGame(id, user1, user2);
+        MultiGame.makeGame(id);
         session.gameId = id;
         session.competitor = key;
         session.multiLat = destinationLat;

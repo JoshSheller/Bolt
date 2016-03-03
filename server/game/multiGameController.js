@@ -48,7 +48,9 @@ module.exports = {
   // Remove specified game instance from database
   removeGame: function (req, res, next) {
     var id = req.body.id;
+    console.log('id: ', req.body);
     removeGame({id: id}).then(function (game) {
+      console.log('game: ', game);
       res.send(201, game);
     });
   }

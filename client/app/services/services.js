@@ -245,6 +245,7 @@ angular.module('bolt.services', [])
     },
 
     removeGame: function (id) {
+      console.log(id);
       return $http({
         method: 'POST',
         url: '/api/games/remove',
