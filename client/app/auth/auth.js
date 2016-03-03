@@ -15,6 +15,7 @@ angular.module('bolt.auth', [])
         $window.localStorage.setItem('preferredDistance', session.preferredDistance);
         $window.localStorage.setItem('runs', session.runs);
         $window.localStorage.setItem('achievements', session.achievements);
+        //NOTE: session.friendRequest is stored as a string, not an array.
         $window.localStorage.setItem('friendRequests', session.friendRequests);
         $location.path('/');
       })

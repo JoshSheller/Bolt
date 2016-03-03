@@ -1,8 +1,16 @@
 <!-- Controller: BoltController - client/app/controllers/boltController.js -->
 
-<!--The data for the friends dropdown -->
-<ul id="friendsListDropdown" class="dropdown-content">
-  <!-- fill in stuff here --> 
+<!--The data for the friend request dropdown -->
+<ul id="friendsListDropdown" class="dropdown-content" >
+  <li class="friendRequestEntry valign-wrapper" ng-repeat='user in friendRequests track by $index'>
+  <div class='foo'>
+  <p class="smallButton left">{{user}}</p>
+  <p class="smallButton right">Accept</p>
+  <p class="smallButton right">Reject</p>
+  <p class="smallButton right">Ignore</p>
+  </div>
+  </li>
+
 </ul>
 
 <nav>
@@ -17,10 +25,10 @@
       <li class="right hide-on-med-and-down"><a href="#/achievements" class="icon right">Achievements</a></li>
 
     </ul>
-
-
   </div>
 </nav>
+
+
 
 <div class="boltButton">
   <a class="btn-floating btn-large waves-effect waves-light red lighten-1" ng-click="startRun()">

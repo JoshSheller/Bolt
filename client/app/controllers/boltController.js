@@ -4,7 +4,8 @@ angular.module('bolt.controller', [])
 
 .controller('BoltController', function ($scope, $location, $window) {
   $scope.session = $window.localStorage;
-  var friendRequests = $window.localStorage.getItem('friendRequests');
+  $scope.friendRequests = $window.localStorage.getItem('friendRequests').split(",");
+  console.log($scope.friendRequests);
 
   $scope.startRun = function () {
     // Check which radio button is selected
@@ -29,6 +30,5 @@ angular.module('bolt.controller', [])
       $(".dropdown-button").dropdown();
     });
   };
-
 });
 

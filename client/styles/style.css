@@ -311,11 +311,30 @@ body{
 
 #friendsListDropdown {
   margin-top: 4.4em;
-  width: 50em !important;
+  width: 20em !important;
+  /*font-size: 5em;*/
+}
+
+.friendRequestEntry {
+  font-size: 1em !important;
+}
+
+.smallButton {
+  font-size: 12px !important;
+  text-align: center;
+  display: inline-block;
+  float: right;
 }
 
 .friendRequestContainer {
   margin-top: 2em;
 }
+
+.foo {
+  width: 500px;
+}
+
+
+
 
 
