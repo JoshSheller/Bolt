@@ -4,18 +4,31 @@ angular.module('bolt.controller', [])
 
 .controller('BoltController', function ($scope, $location, $window, $interval, Profile) {
   $scope.session = $window.localStorage;
-  $scope.friendRequests = $window.localStorage.getItem('friendRequests').split(",");
+  $scope.friendRequests = [];
+  if ( $scope.friendRequests[0] === "" ) {
+    // if there are no friend requests, the array will equal [""]. we want it to be []
+    $scope.friendRequests.pop();
+  }
 
   // checks every 5 seconds to see if a user has any friend requests
   var checkForFriendRequests = function () {
-    if ($scope.friendRequests.length > 0) {
-      document.getElementsByClassName("friendIcon")[0].classList.add("activeFriendIcon");
-    }
+    Profile.getUser()
+    .then(function (user) {
+      $scope.friendRequests = user.friendRequests;
+      if ($scope.friendRequests.length > 0) {
+        // sometimes friendIcon is not defined, might be because it hasn't rendered yet
+        var friendIcon = document.getElementsByClassName("friendIcon")[0];
+        if ( friendIcon ) {
+          friendIcon.classList.add("activeFriendIcon");
+        };
+      }
+    });
   };
+
   checkForFriendRequests();
   $interval(function () {
     checkForFriendRequests();
-  }, 5000);
+  }, 1500);
 
   $scope.startRun = function () {
     // Check which radio button is selected
@@ -43,7 +56,7 @@ angular.module('bolt.controller', [])
 
   $scope.handleFriendRequest = function (action, newFriend) {
     Profile.handleFriendRequest(action, this.session.username, newFriend)
-    .then(function(data) {
+    .then(function (data) {
       console.log('data', data);
     });
   };

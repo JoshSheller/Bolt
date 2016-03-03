@@ -251,9 +251,8 @@ angular.module('bolt.services', [])
       }).then(function (res) {
         console.log('res');
         return res;
-      })
-
-    }
+      });
+    };
 
   return {
     updateUser: updateUser,

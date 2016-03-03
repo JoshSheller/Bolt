@@ -196,12 +196,11 @@ module.exports = {
           } else {
             res.send(foundSelfUser);
           }
-        })
+        });
       } else {
-        // this check is technically unnecessary, since it's also done when 
+        // this check is technically unnecessary, since it's also done when
         // the user submits a friend request in the first place.
         if (foundSelfUser.friends.indexOf(newFriend) > -1) {
-          console.log('friends already.');
           res.send('You are already friends with this user');
         } else {
           foundSelfUser.friends.push(newFriend);
@@ -212,34 +211,30 @@ module.exports = {
             if ( err ) {
               console.log( 'err' );
               next(err);
-            } else {
-              console.log('saved');
-              // return 'foobar';
             }
           })
           // add self to newFriend
           .then(function () {
             findUser({username: newFriend})
             .then(function (foundNewFriendUser) {
-              console.log(foundNewFriendUser);
               foundNewFriendUser.friends.push(self);
 
               foundNewFriendUser.save(function (err) {
-                if (  err ) {
+                if ( err ) {
                   next(err);
                 } else {
                   user = foundNewFriendUser;
-                  res.send(user);
+                  res.send('user successfully added');
                 }
               });
             })
             .fail(function (error) {
               next(error);
             });
-          })
-        }
+          });
+        };
       };
-    })
+    });
   }
 
 
