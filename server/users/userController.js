@@ -37,7 +37,8 @@ module.exports = {
               phone: user.phone,
               preferredDistance: user.preferredDistance,
               runs: JSON.stringify(user.runs),
-              achievements: JSON.stringify(user.achievements)
+              achievements: JSON.stringify(user.achievements),
+              friendRequests: user.friendRequests
             });
           } else {
             return next(new Error('No user'));
