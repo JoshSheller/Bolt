@@ -10,22 +10,12 @@ angular.module('run.controller', [])
   $scope.distanceRun = 0;
   $scope.percentComplete = 0;
 
-  var testCount = 0;
-
   var startTime;
   var runTime;
   var statusUpdateLoop;
   var startLat;
   var startLong;
   var FINISH_RADIUS = 0.0002; // miles?
-
-  // Math functions
-  var sqrt = Math.sqrt;
-  var floor = Math.floor;
-  var random = Math.random;
-  var pow2 = function (num) {
-    return Math.pow(num, 2);
-  };
 
   // Update run timer
   var updateTotalRunTime = function () {
@@ -42,11 +32,11 @@ angular.module('run.controller', [])
   ];
 
   var setRunMessage = function () {
-    $scope.runMessage = messages[floor(random() * messages.length)] + "...";
+    $scope.runMessage = messages[Math.floor(Math.random() * messages.length)] + "...";
   };
 
   // Display random waiting message
-  $interval(setRunMessage, random() * 1000, messages.length);
+  $interval(setRunMessage, Math.random() * 1000, messages.length);
 
   $scope.startRun = function () {
     // Simulate finishing run for manual testing
@@ -132,39 +122,16 @@ angular.module('run.controller', [])
   // Check if user is in close proximity to destination
   var checkIfFinished = function () {
     if ($scope.destination && $scope.userLocation) {
-      var distRemaining = distBetween($scope.userLocation, $scope.destination);
+      var distRemaining = Geo.distBetween($scope.userLocation, $scope.destination);
       if (distRemaining < FINISH_RADIUS) {
         finishRun();
       }
     }
   };
 
-  // Calculate distance between two coordinates
-  var distBetween = function (loc1, loc2) {
-    return sqrt(pow2(loc1.lat - loc2.lat) + pow2(loc1.lng - loc2.lng));
-  };
-
-  // Calculate the percentage of the total route distance that the user has run
-  var calculatePercentageRouteRun = function (loc1, loc2) {
-    $scope.distanceRun += distBetween(loc1, loc2);
-    var percentageRun = Math.ceil(($scope.distanceRun / $scope.totalDistance) * 100);
-    return percentageRun;
-  };
-
-  // Update geographical location and timers
+  // Update geographical location and timers. Update progress bar via calculating percentage total route completed.
   var updateStatus = function () {
-    if ($scope.userLocation !== undefined) {
-      var prevLocation = {
-        lat: $scope.userLocation.lat,
-        lng: $scope.userLocation.lng
-      };
-    }
     Geo.updateCurrentPosition($scope);
-    // console.log('prevPosition: ', prevLocation);
-    // console.log('userPosition: ', $scope.userLocation);
-    if ($scope.userLocation !== undefined) {
-      $scope.percentComplete = calculatePercentageRouteRun(prevLocation, $scope.userLocation);
-    };
     updateTotalRunTime();
     Run.updateGoalTimes($scope);
     checkIfFinished();

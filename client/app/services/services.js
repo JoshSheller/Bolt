@@ -10,6 +10,14 @@ angular.module('bolt.services', [])
   var directionsRenderer = new google.maps.DirectionsRenderer();
   var route;
 
+  // Math functions
+  var sqrt = Math.sqrt;
+  var floor = Math.floor;
+  var random = Math.random;
+  var pow2 = function (num) {
+    return Math.pow(num, 2);
+  };
+
   // Create map around the users current location and their destination
   var makeInitialMap = function ($scope, destination) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -85,7 +93,25 @@ angular.module('bolt.services', [])
     };
   };
 
+  // Calculate distance between two coordinates
+  var distBetween = function (loc1, loc2) {
+    return sqrt(pow2(loc1.lat - loc2.lat) + pow2(loc1.lng - loc2.lng));
+  };
+
+  // Calculate the percentage of the total route distance that the user has run
+  var calculatePercentageRouteRun = function ($scope, loc1, loc2) {
+    $scope.distanceRun += distBetween(loc1, loc2);
+    var percentageRun = Math.ceil(($scope.distanceRun / $scope.totalDistance) * 100);
+    return percentageRun;
+  };
+
   var updateCurrentPosition = function ($scope) {
+    if ($scope.userLocation) {
+      var prevLocation = {
+        lat: $scope.userLocation.lat,
+        lng: $scope.userLocation.lng
+      };
+    }
     navigator.geolocation.getCurrentPosition(function (position) {
       currentLocMarker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
       if ($scope) {
@@ -93,6 +119,11 @@ angular.module('bolt.services', [])
           lat: currentLocMarker.position.lat(),
           lng: currentLocMarker.position.lng()
         };
+        if (prevLocation) {
+          $scope.percentComplete = calculatePercentageRouteRun($scope, prevLocation, $scope.userLocation);
+          console.log('prevPosition: ', prevLocation);
+          console.log('userLocation: ', $scope.userLocation);
+        }
       }
     }, function (err) {
       console.error(err);
@@ -109,7 +140,8 @@ angular.module('bolt.services', [])
 
   return {
     makeInitialMap: makeInitialMap,
-    updateCurrentPosition: updateCurrentPosition
+    updateCurrentPosition: updateCurrentPosition,
+    distBetween: distBetween
   };
 
 })
