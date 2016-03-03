@@ -188,7 +188,8 @@ module.exports = {
     findUser({username: self})
     .then(function (foundSelfUser) {
       if ( action === 'reject' ) {
-        var index = foundSelfUser.indexOf(newFriend);
+        // delete the friend request from self
+        var index = foundSelfUser.friendRequests.indexOf(newFriend);
         foundSelfUser.friendRequests.splice(index, 1);
         foundSelUser.save(function (err) {
           if ( err ) {
@@ -205,7 +206,7 @@ module.exports = {
         } else {
           foundSelfUser.friends.push(newFriend);
           // delete the friend request from self
-          var index = foundSelfUser.friends.indexOf(newFriend);
+          var index = foundSelfUser.friendRequests.indexOf(newFriend);
           foundSelfUser.friendRequests.splice(index, 1);
           foundSelfUser.save(function (err) {
             if ( err ) {

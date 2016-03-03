@@ -15,13 +15,16 @@ angular.module('bolt.controller', [])
     Profile.getUser()
     .then(function (user) {
       $scope.friendRequests = user.friendRequests;
+      var friendIcon = document.getElementsByClassName("friendIcon")[0];
       if ($scope.friendRequests.length > 0) {
-        // sometimes friendIcon is not defined, might be because it hasn't rendered yet
-        var friendIcon = document.getElementsByClassName("friendIcon")[0];
-        if ( friendIcon ) {
-          friendIcon.classList.add("activeFriendIcon");
-        };
-      }
+        // change the color of the icon to green
+        friendIcon.classList.add("activeFriendIcon");
+      } else {
+        // change the color of the icon to white, if it was green
+        if (friendIcon.classList.contains("activeFriendIcon")) {
+          friendIcon.classList.remove("activeFriendIcon");
+        }
+      };
     });
   };
 
