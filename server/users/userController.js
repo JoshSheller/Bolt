@@ -7,6 +7,7 @@ var helpers = require('../config/helpers');
 var findUser = Q.nbind(User.findOne, User);
 var createUser = Q.nbind(User.create, User);
 var updateUserDB = Q.nbind(User.update, User);
+var saveUser = Q.nbind(User.save, User);
 
 module.exports = {
 
@@ -140,5 +141,62 @@ module.exports = {
         next(error);
       });
     }
+  },
+
+  handleFriendRequest: function (req, res, next) {
+    console.log('top of handleFriendRequest');
+    var username = req.body.username;
+    var friendUsername = req.body.friendUsername;
+    console.log(friendUsername);
+    // find the user with the given username.
+    findUser({username: friendUsername})
+    .then(function (foundUser) {
+      console.log('access DB...', foundUser);
+      // if the username does not exist, respond with a message
+      if ( !foundUser ) {
+        console.log('user does not exist');
+        res.send('User does not exist');
+      }
+      // if the friend already has a friend request from the user, then respond with a message
+      else if ( foundUser.friendRequests.indexOf(username) > -1 ) {
+        console.log(' wait please ');
+        res.send('You have already sent this user a friend request');
+      }
+      // if username exists, add the person's username to the friend request list
+      else {
+        console.log('handleFriendRequest else statement');
+        foundUser.friendRequests.push(username);
+        foundUser.save(function (err) {
+          if (err) {
+            next(new Error('Error saving friend request'));
+          } else {
+            res.send('Friend request made');
+          }
+        });
+      };
+    });
   }
+
+
+
+
+
+
+
+
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+

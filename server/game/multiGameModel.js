@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 // Define mongo schema
 var MultiGameSchema = new mongoose.Schema({
+  //why are user1/user2 defined twice?
   user1: Object,
   user2: Object,
   active: Boolean,

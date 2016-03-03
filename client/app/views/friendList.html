@@ -1,0 +1,28 @@
+<!-- Controller: ProfileController - client/app/controllers/profile.js -->
+<nav>
+  <div class="nav-wrapper grey darken-3">
+    <a href="#/" class="brand-logo">Friends</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down right">
+      <li><a href="#/" class="icon left">Run</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="titleMessage"> Who Do You Want to Race? </div>
+
+<div class="container">
+  <ul class="collection">
+    <li class="collection-item valign-wrapper">
+      <div class="greenCircle"></div>
+      <p class="valign">{{ session.firstName }} {{session.lastName}}</p>
+    </li>
+  </ul>
+</div>
+
+<div class="container profile center-align">
+  <div class="buttonLayer">
+    <span ng-click="navigate('/createProfile')"
+      class="waves-effect grey darken-3 waves-light btn center"> Race!
+    </span>
+  </div>
+</div>

@@ -70,6 +70,12 @@ angular.module('bolt', [
       controller: 'CreateProfileController',
       authenticate: true
     })
+    .when('/friendList', {
+      // which clicking on 'friend' on the search options
+      templateUrl: 'app/views/friendList.html',
+      controller: 'friendListController',
+      authenticate: true
+    })
     .otherwise({
       redirectTo: '/'
     });

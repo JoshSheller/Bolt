@@ -49,8 +49,10 @@ angular.module('multiload.controller', ['bolt.profile'])
         var destinationLng = (userPosition.coords.longitude + location[1]) / 2;
 
         geoFire.remove(key).then(function () {});
+        //cancel the search
         $interval.cancel(stop);
         geoQuery.cancel();
+
         MultiGame.makeGame(id);
         session.gameId = id;
         session.competitor = key;
@@ -71,6 +73,7 @@ angular.module('multiload.controller', ['bolt.profile'])
       radius: 1000 // miles
     });
 
+    //stop is kind of misnamed here
     stop = $interval(function () {
       search(geoQuery);
     }, 2000);
@@ -81,6 +84,8 @@ angular.module('multiload.controller', ['bolt.profile'])
   var addUserGeoFire = function () {
     navigator.geolocation.getCurrentPosition(function (position) {
       userPosition = position;
+      // GeoFire.set adds key-location pair to this GeoFire
+      // A GeoFire instance is used to read and write geolocation data to your Firebase database and to create queries.
       geoFire.set(session.username, [position.coords.latitude, position.coords.longitude]).then(function () {
         console.log("Provided key has been added to GeoFire");
         generateQuery();

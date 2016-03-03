@@ -6,6 +6,7 @@ angular.module('bolt.auth', [])
   $scope.signin = function () {
     Auth.signin($scope.user)
       .then(function (session) {
+        console.log('session friendRequests', session.friendRequests);
         $window.localStorage.setItem('com.bolt', session.token);
         $window.localStorage.setItem('username', session.username);
         $window.localStorage.setItem('firstName', session.firstName);
@@ -15,6 +16,7 @@ angular.module('bolt.auth', [])
         $window.localStorage.setItem('preferredDistance', session.preferredDistance);
         $window.localStorage.setItem('runs', session.runs);
         $window.localStorage.setItem('achievements', session.achievements);
+        $window.localStorage.setItem('friendRequests', session.friendRequests);
         $location.path('/');
       })
       .catch(function (error) {
