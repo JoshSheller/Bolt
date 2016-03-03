@@ -9,7 +9,8 @@ angular.module('bolt', [
   'multiload.controller',
   'multirun.controller',
   'bolt.createProfile',
-  'achievements.controller'
+  'achievements.controller',
+  'bolt.friendList'
 ])
 .config(function ($routeProvider, $httpProvider) {
   // Configure various routes

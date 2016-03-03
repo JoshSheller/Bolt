@@ -41,7 +41,10 @@ var UserSchema = new mongoose.Schema({
     type: Array,
     default: []
   },
-
+  friends: {
+    type: Array,
+    default: []
+  },
   personalBest: Number, // Personal best in min/mile
   achievements: {
     type: Object,

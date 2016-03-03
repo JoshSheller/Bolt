@@ -305,17 +305,41 @@ body{
   margin-right: 1em;
 }
 
-.identity {
-  color: rgba(237, 65, 42, 0.85);
+
+/******** Friend Dropdown ***********/
+.activeFriendIcon {
+  color: rgb(62, 243, 86);
 }
 
 #friendsListDropdown {
   margin-top: 4.4em;
-  width: 50em !important;
+  width: 15em !important;
+}
+
+
+.smallButton {
+  font-size: 0.85em;
+  text-align: center;
+  display: inline-block;
+  margin-left: 0.5em;
+  padding: 0.2em;
+}
+
+.right:hover {
+  color: rgba(237, 65, 42, 0.85);
 }
 
 .friendRequestContainer {
   margin-top: 2em;
+}
+
+.friendRequestEntryContent {
+  width: 15em;
+}
+
+
+.friendRequestEntry {
+  font-size: 1em !important;
 }
 
 
