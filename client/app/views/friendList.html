@@ -12,9 +12,10 @@
 
 <div class="container">
   <ul class="collection">
-    <li class="collection-item valign-wrapper">
+    <li class="collection-item valign-wrapper" ng-repeat='friend in friends track by $index'>
       <div class="greenCircle"></div>
-      <p class="valign">{{ session.firstName }} {{session.lastName}}</p>
+      <!-- eventually index this by who is on or not -->
+      <p class="valign"> {{ friend }}</p>
     </li>
   </ul>
 </div>
