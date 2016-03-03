@@ -5,8 +5,8 @@
   <li class="friendRequestEntry valign-wrapper" ng-repeat='user in friendRequests track by $index'>
   <div class='friendRequestEntryContent'>
   <span class="smallButton left">{{user}}</span>
-  <span class="smallButton right">Reject</span>
-  <span class="smallButton right">Accept</span>
+  <span class="smallButton right" ng-click="rejectFriendRequest">Reject</span>
+  <span class="smallButton right" ng-click="acceptFriendRequest">Accept</span>
   </div>
   </li>
 
@@ -22,7 +22,6 @@
        <!--hide these two when the screen gets too small -->
       <li class="right hide-on-med-and-down"><a href="#/profile" class="icon left">{{session.firstName}}</a></li>
       <li class="right hide-on-med-and-down"><a href="#/achievements" class="icon right">Achievements</a></li>
-
     </ul>
   </div>
 </nav>

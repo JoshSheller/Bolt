@@ -5,6 +5,7 @@ angular.module('bolt.profile', ['bolt.auth'])
   $scope.newInfo = {};
   $scope.session = window.localStorage;
   $scope.showFriendInputForm = false;
+  $scope.error = "";
 
   var getUserInfo = function () {
     Profile.getUser()
@@ -24,13 +25,21 @@ angular.module('bolt.profile', ['bolt.auth'])
   $scope.toggleFriendInputForm = function () {
     $scope.inputFriendUsername = '';
     $scope.showFriendInputForm = !$scope.showFriendInputForm;
+    $scope.error = "";
   };
 
   $scope.friendRequest = function (inputFriendUsername) {
     var username = $window.localStorage.getItem('username');
-    $scope.toggleFriendInputForm();
     // use the profile service to send a POST request
-    Profile.sendFriendRequest(username, inputFriendUsername);
+    Profile.sendFriendRequest(username, inputFriendUsername)
+    .then(function (data) {
+      console.log(data);
+      if ( data === 'User does not exist' || data === 'You have already sent this user a friend request' ) {
+        $scope.error = data;
+      } else {
+        $scope.toggleFriendInputForm();
+      }
+    });
   };
 
   getUserInfo();

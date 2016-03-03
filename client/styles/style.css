@@ -307,8 +307,8 @@ body{
 
 
 /******** Friend Dropdown ***********/
-.friendIcon {
-  color: rgba(237, 65, 42, 0.85);
+.activeFriendIcon {
+  color: rgb(62, 243, 86);
 }
 
 #friendsListDropdown {
@@ -336,8 +336,6 @@ body{
 .friendRequestEntryContent {
   width: 15em;
 }
-
-
 
 
 .friendRequestEntry {

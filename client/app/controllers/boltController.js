@@ -2,10 +2,20 @@
 
 angular.module('bolt.controller', [])
 
-.controller('BoltController', function ($scope, $location, $window) {
+.controller('BoltController', function ($scope, $location, $window, $interval) {
   $scope.session = $window.localStorage;
   $scope.friendRequests = $window.localStorage.getItem('friendRequests').split(",");
-  console.log($scope.friendRequests);
+
+  // checks every 5 seconds to see if a user has any friend requests
+  var checkForFriendRequests = function () {
+    if ($scope.friendRequests.length > 0) {
+      document.getElementsByClassName("friendIcon")[0].classList.add("activeFriendIcon");
+    }
+  };
+  checkForFriendRequests();
+  $interval(function () {
+    checkForFriendRequests();
+  }, 5000);
 
   $scope.startRun = function () {
     // Check which radio button is selected
@@ -24,11 +34,13 @@ angular.module('bolt.controller', [])
     }
   };
 
-  //when you click on the friends icon, trigger the dropdown menu dropdown
+  // when you click on the friends icon, trigger the dropdown menu dropdown
   $scope.dropDown = function () {
     $( document ).ready(function () {
       $(".dropdown-button").dropdown();
     });
   };
+
+  // send a PR to the server, using func on profile factory
 });
 
