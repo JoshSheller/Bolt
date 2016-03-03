@@ -46,6 +46,7 @@ angular.module('multirun.controller', [])
   $scope.checkUserCancelled = function () {
     MultiGame.getGame(session.gameId)
       .then(function (game) {
+        console.log('game: ', game);
         if (game.cancelled) {
           MultiGame.removeGame(session.id);
           if (stopCheck !== undefined) {
