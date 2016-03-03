@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 // Define mongo schema
 var MultiGameSchema = new mongoose.Schema({
-  // user1: Object,
-  // user2: Object,
+  user1: Object,
+  user2: Object,
   active: Boolean,
   id: {
     type: String,
