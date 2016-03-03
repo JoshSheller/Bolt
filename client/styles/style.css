@@ -305,36 +305,43 @@ body{
   margin-right: 1em;
 }
 
-.identity {
+
+/******** Friend Dropdown ***********/
+.friendIcon {
   color: rgba(237, 65, 42, 0.85);
 }
 
 #friendsListDropdown {
   margin-top: 4.4em;
-  width: 20em !important;
-  /*font-size: 5em;*/
+  width: 15em !important;
 }
 
-.friendRequestEntry {
-  font-size: 1em !important;
-}
 
 .smallButton {
-  font-size: 12px !important;
+  font-size: 0.85em;
   text-align: center;
   display: inline-block;
-  float: right;
+  margin-left: 0.5em;
+  padding: 0.2em;
+}
+
+.right:hover {
+  color: rgba(237, 65, 42, 0.85);
 }
 
 .friendRequestContainer {
   margin-top: 2em;
 }
 
-.foo {
-  width: 500px;
+.friendRequestEntryContent {
+  width: 15em;
 }
 
 
 
+
+.friendRequestEntry {
+  font-size: 1em !important;
+}
 
 
