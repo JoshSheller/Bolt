@@ -183,9 +183,7 @@ angular.module('bolt.services', [])
 
 // Update and retrieve user information
 .factory('Profile', function ($http) {
-
-  return {
-    updateUser : function (newInfo, user) {
+    var updateUser = function (newInfo, user) {
       return $http({
         method: 'PUT',
         url: '/api/users/profile',
@@ -201,16 +199,33 @@ angular.module('bolt.services', [])
       }).then(function (res) {
         return res;
       });
-    },
+    };
 
-    getUser : function () {
+    var getUser = function () {
       return $http({
         method: 'GET',
         url: '/api/users/profile'
       }).then(function (user) {
         return user.data;
       });
-    }
+    };
+
+    var sendFriendRequest = function (friendUsername) {
+      return $http({
+        method: 'POST',
+        url: '/api/users/friendRequest',
+        data: {
+          friendUsername: friendUsername
+        }
+      }).then(function (res) {
+        console.log(res);
+      } );
+    };
+
+  return {
+    updateUser: updateUser,
+    getUser: getUser,
+    sendFriendRequest: sendFriendRequest
   };
 })
 

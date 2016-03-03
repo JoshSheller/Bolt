@@ -35,6 +35,9 @@ module.exports = function (app, express) {
   // Route to update user preferences and settings
   app.put('/api/users/profile', userController.updateUser);
 
+  // Route to handle friend request
+  app.post('/api/users/friendRequest', userController.handleFriendRequest);
+
   // If a request is sent somewhere other than the routes above,
   // send it through our custom error handler
   app.use(helpers.errorLogger);

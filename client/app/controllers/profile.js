@@ -22,7 +22,14 @@ angular.module('bolt.profile', ['bolt.auth'])
   };
 
   $scope.toggleFriendInputForm = function () {
+    $scope.inputFriendUsername = '';
     $scope.showFriendInputForm = !$scope.showFriendInputForm;
+  };
+
+  $scope.friendRequest = function (inputFriendUsername) {
+    $scope.toggleFriendInputForm();
+    // use the profile service to send a POST request
+    Profile.sendFriendRequest(inputFriendUsername);
   };
 
   getUserInfo();

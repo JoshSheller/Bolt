@@ -140,5 +140,34 @@ module.exports = {
         next(error);
       });
     }
+  },
+
+  handleFriendRequest: function (req, res, next) {
+    console.log('in server');
+    var friendUsername = req.body.friendUsername;
+    res.send('success: friendUN: ', friendUsername);
   }
+
+
+
+
+
+
+
+
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
