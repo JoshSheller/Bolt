@@ -7,6 +7,8 @@ angular.module('run.controller', [])
   $scope.userLocation;
   $scope.destination;
   $scope.hasHours = true;
+  $scope.distanceRun = 0;
+  $scope.percentComplete = 0;
 
   var startTime;
   var runTime;
@@ -140,9 +142,19 @@ angular.module('run.controller', [])
     return sqrt(pow2(loc1.lat - loc2.lat) + pow2(loc1.lng - loc2.lng));
   };
 
+  // Calculate the percentage of the total route distance that the user has run
+  var calculatePercentageRouteRun = function (loc1, loc2) {
+    $scope.distanceRun += distBetween(loc1, loc2);
+    var percentageRun = Math.ceil(($scope.distanceRun / $scope.totalDistance) * 100);
+    return percentageRun;
+  };
+
   // Update geographical location and timers
   var updateStatus = function () {
+    $scope.percentComplete++;
+    // var prevPosition = $scope.userLocation;
     Geo.updateCurrentPosition($scope);
+    // $scope.percentComplete = calculatePercentageRouteRun(prevPosition, $scope.userLocation);
     updateTotalRunTime();
     Run.updateGoalTimes($scope);
     checkIfFinished();
