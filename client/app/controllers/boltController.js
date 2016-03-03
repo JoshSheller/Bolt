@@ -4,6 +4,9 @@ angular.module('bolt.controller', [])
 
 .controller('BoltController', function ($scope, $location, $window) {
   $scope.session = $window.localStorage;
+  var friendRequests = $window.localStorage.getItem('friendRequests');
+  console.log(friendRequests);
+
   $scope.startRun = function () {
     // Check which radio button is selected
     if (document.getElementById("switch_3_left").checked) {

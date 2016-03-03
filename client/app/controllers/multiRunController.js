@@ -24,6 +24,7 @@ angular.module('multirun.controller', [])
   $scope.oppFinished = false;
   var stopCheck;
   var stopFinish;
+  var statusUpdateLoop;
   var userNum;
   var oppNum;
 
@@ -40,6 +41,38 @@ angular.module('multirun.controller', [])
   // Determine whether check or 'waiting' should be displayed to user
   $scope.showCheck = function () {
     return !$scope.waiting && !$scope.raceStarted;
+  };
+
+  // Checks if other user has cancelled the race
+  $scope.checkUserCancelled = function () {
+    MultiGame.getGame(session.gameId)
+      .then(function (game) {
+        console.log('game: ', game);
+        if (game.cancelled) {
+          MultiGame.removeGame(session.gameId);
+          if (stopCheck !== undefined) {
+            $interval.cancel(stopCheck);
+          }
+          if (stopFinish !== undefined) {
+            $interval.cancel(stopFinish);
+          }
+          if (statusUpdateLoop !== undefined) {
+            $interval.cancel(statusUpdateLoop);
+          }
+          $interval.cancel(checkCancelled);
+          $location.path('/');
+        }
+      });
+  };
+
+  var checkCancelled = $interval($scope.checkUserCancelled, 300);
+
+  $scope.raceCancelledOrFinished = function () {
+    $interval.cancel(statusUpdateLoop);
+    $interval.cancel(checkCancelled);
+    $interval.cancel(stopCheck);
+    $interval.cancel(stopFinish);
+    MultiGame.updateGame(session.gameId, 'cancelled');
   };
 
   // Activated when user presses the check button. In multiplayer game database
@@ -79,10 +112,9 @@ angular.module('multirun.controller', [])
       });
   };
 
-  $scope.endRaceBeforeStart = function () {
-    MultiGame.removeGame(session.id);
-    $interval.cancel(stopCheck);
-  };
+  // $scope.endRaceBeforeStart = function () {
+  //   MultiGame.updateGame(session.gameId, 'cancelled');
+  // };
 
   // End multiplayer block
   /////////////////////////////////////////////////////////////////////////////////
@@ -134,6 +166,7 @@ angular.module('multirun.controller', [])
       MultiGame.updateGame(session.gameId, 'won');
     }
     ////////////////////////////////////////////////////////////////////////////
+    $interval.cancel(checkCancelled);
 
     $scope.$parent.runTime = runTime.format('mm:ss');
     var medal = $scope.$parent.achievement = $scope.currentMedal;
@@ -217,7 +250,11 @@ angular.module('multirun.controller', [])
 
   // Stop geotracker upon canceling run
   // Does this make sure to stop tracking if they close the window? --> all scripts die when the browser is no longer interpreting them
+
   $scope.$on('$destroy', function () {
+    console.log('DESTROYED!!!!!!');
     $interval.cancel(statusUpdateLoop);
+    $interval.cancel(checkCancelled);
+    MultiGame.updateGame(session.gameId, 'cancelled');
   });
 });
