@@ -9,14 +9,25 @@ angular.module('bolt.services', [])
   var directionsService = new google.maps.DirectionsService();
   var directionsRenderer = new google.maps.DirectionsRenderer();
   var route;
+  var initialLat;
+  var initialLng;
+
 
   // Create map around the users current location and their destination
   var makeInitialMap = function ($scope, destination) {
     navigator.geolocation.getCurrentPosition(function (position) {
+      console.log("latpositionis:", position.coords.latitude);
+      $scope.initialLoc = {
+        longitude: position.coords.latitude,
+        latitude : position.coords.longitude
+      };
+      console.log($scope.initialLoc);
+
         makeMap({
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }, $scope);
+
       }, function (err) {
         console.error(err);
       });
