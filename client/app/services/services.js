@@ -210,16 +210,23 @@ angular.module('bolt.services', [])
       });
     };
 
-    var sendFriendRequest = function (friendUsername) {
+    var sendFriendRequest = function (username, friendUsername) {
       return $http({
         method: 'POST',
         url: '/api/users/friendRequest',
         data: {
+          username: username,
           friendUsername: friendUsername
         }
       }).then(function (res) {
-        console.log(res);
-      } );
+        if ( res.data === 'User does not exist' ) {
+          console.log( 'User does not exist' );
+        } else if ( res.data === 'You have already sent this user a friend request' ) {
+          console.log( 'You have already sent this person a friend request' );
+        } else {
+          console.log( 'Friend request made' );
+        }
+      });
     };
 
   return {
