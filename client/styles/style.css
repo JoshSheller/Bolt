@@ -318,4 +318,11 @@ body{
 
 #friendsListDropdown {
   margin-top: 4.4em;
+  width: 50em !important;
 }
+
+.friendRequestContainer {
+  margin-top: 2em;
+}
+
+

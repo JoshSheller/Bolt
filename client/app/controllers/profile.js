@@ -4,6 +4,7 @@ angular.module('bolt.profile', ['bolt.auth'])
 .controller('ProfileController', function ($scope, $location, $rootScope, $window, Auth, Profile) {
   $scope.newInfo = {};
   $scope.session = window.localStorage;
+  $scope.showFriendInputForm = false;
 
   var getUserInfo = function () {
     Profile.getUser()
@@ -18,6 +19,10 @@ angular.module('bolt.profile', ['bolt.auth'])
 
   $scope.signout = function () {
     Auth.signout();
+  };
+
+  $scope.toggleFriendInputForm = function () {
+    $scope.showFriendInputForm = !$scope.showFriendInputForm;
   };
 
   getUserInfo();

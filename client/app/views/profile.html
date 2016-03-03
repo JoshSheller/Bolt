@@ -32,10 +32,24 @@
 
 <div class="container profile center-align">
   <div class="buttonLayer">
-    <span><a href="#/" class="waves-effect grey darken-3 waves-light btn">Run<a></span>
+    <span><a href="#/" class="waves-effect grey darken-3 waves-light btn">Run</a></span>
     <span ng-click="navigate('/createProfile')"
       class="waves-effect grey darken-3 waves-light btn">Edit
     </span>
+    <span><a class="waves-effect grey darken-3 waves-light btn" ng-click="toggleFriendInputForm()">Add a Friend</a></span>
     <span><a href="#/" class="waves-effect grey darken-3 waves-light btn" ng-click="signout()">Log Out</a></span>
   </div>
 </div>
+
+<div class="friendRequestContainer container center-align collection" ng-show="showFriendInputForm">
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Friend" id="first_name" type="text" class="validate">
+        </div>
+      </div>
+
+    <div class="row">
+      <span class="waves-effect grey darken-3 waves-light btn"> Send Request!</span>
+    </div>
+</div>
+

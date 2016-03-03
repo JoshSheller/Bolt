@@ -28,6 +28,5 @@ angular.module('bolt.controller', [])
     });
   };
 
-
 });
 
