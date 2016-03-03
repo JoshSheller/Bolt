@@ -241,6 +241,7 @@ angular.module('multirun.controller', [])
   // Stop geotracker upon canceling run
   // Does this make sure to stop tracking if they close the window? --> all scripts die when the browser is no longer interpreting them
   $scope.$on('$destroy', function () {
+    console.log('destroyed!!!!!!!!!!');
     $interval.cancel(statusUpdateLoop);
     $interval.cancel(checkCancelled);
     MultiGame.updateGame(session.gameId, 'cancelled');
