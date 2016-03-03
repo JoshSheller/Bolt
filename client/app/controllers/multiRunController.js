@@ -47,9 +47,15 @@ angular.module('multirun.controller', [])
       .then(function (game) {
         if (game.cancelled) {
           MultiGame.removeGame(session.id);
-          $interval.cancel(stopCheck);
-          $interval.cancel(stopFinish);
-          $interval.cancel(statusUpdateLoop);
+          if (stopCheck !== undefined) {
+            $interval.cancel(stopCheck);
+          }
+          if (stopFinish !== undefined) {
+            $interval.cancel(stopFinish);
+          }
+          if (statusUpdateLoop !== undefined) {
+            $interval.cancel(statusUpdateLoop);
+          }
           $location.path('/');
         }
       });
