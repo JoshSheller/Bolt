@@ -10,6 +10,8 @@ angular.module('run.controller', [])
   $scope.distanceRun = 0;
   $scope.percentComplete = 0;
 
+  var testCount = 0;
+
   var startTime;
   var runTime;
   var statusUpdateLoop;
@@ -151,9 +153,18 @@ angular.module('run.controller', [])
 
   // Update geographical location and timers
   var updateStatus = function () {
-    var prevPosition = $scope.userLocation;
+    if ($scope.userLocation !== undefined) {
+      var prevLocation = {
+        lat: $scope.userLocation.lat,
+        lng: $scope.userLocation.lng
+      };
+    }
     Geo.updateCurrentPosition($scope);
-    $scope.percentComplete = calculatePercentageRouteRun(prevPosition, $scope.userLocation);
+    // console.log('prevPosition: ', prevLocation);
+    // console.log('userPosition: ', $scope.userLocation);
+    if ($scope.userLocation !== undefined) {
+      $scope.percentComplete = calculatePercentageRouteRun(prevLocation, $scope.userLocation);
+    };
     updateTotalRunTime();
     Run.updateGoalTimes($scope);
     checkIfFinished();
