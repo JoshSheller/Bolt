@@ -144,15 +144,12 @@ module.exports = {
     }
   },
 
-  handleFriendRequest: function (req, res, next) {
-    console.log('top of handleFriendRequest');
+  submitFriendRequest: function (req, res, next) {
     var username = req.body.username;
     var friendUsername = req.body.friendUsername;
-    console.log(friendUsername);
     // find the user with the given username.
     findUser({username: friendUsername})
     .then(function (foundUser) {
-      console.log('access DB...', foundUser);
       // if the username does not exist, respond with a message
       if ( !foundUser ) {
         console.log('user does not exist');
@@ -160,12 +157,14 @@ module.exports = {
       }
       // if the friend already has a friend request from the user, then respond with a message
       else if ( foundUser.friendRequests.indexOf(username) > -1 ) {
-        console.log(' wait please ');
         res.send('You have already sent this user a friend request');
+      }
+      // if you are already friends with the person, then respond with a message
+      else if ( foundUser.friends.indexOf(username) > -1 ) {
+        res.send('You are already friends with this person');
       }
       // if username exists, add the person's username to the friend request list
       else {
-        console.log('handleFriendRequest else statement');
         foundUser.friendRequests.push(username);
         foundUser.save(function (err) {
           if (err) {
@@ -176,8 +175,72 @@ module.exports = {
         });
       };
     });
-  }
+  },
 
+  handleFriendRequestAction: function (req, res, next) {
+    var action = req.body.action;
+    var newFriend = req.body.newFriend;
+    var self = req.body.self;
+
+    // if action === accept, do a query for both users, and add both into friends array.
+     // search the DB for the specific user
+    var queryCondition = {username: newFriend};
+    findUser({username: self})
+    .then(function (foundSelfUser) {
+      if ( action === 'reject' ) {
+        var index = foundSelfUser.indexOf(newFriend);
+        foundSelfUser.friendRequests.splice(index, 1);
+        foundSelUser.save(function (err) {
+          if ( err ) {
+            next(err);
+          } else {
+            res.send(foundSelfUser);
+          }
+        })
+      } else {
+        // this check is technically unnecessary, since it's also done when 
+        // the user submits a friend request in the first place.
+        if (foundSelfUser.friends.indexOf(newFriend) > -1) {
+          console.log('friends already.');
+          res.send('You are already friends with this user');
+        } else {
+          foundSelfUser.friends.push(newFriend);
+          // delete the friend request from self
+          var index = foundSelfUser.friends.indexOf(newFriend);
+          foundSelfUser.friendRequests.splice(index, 1);
+          foundSelfUser.save(function (err) {
+            if ( err ) {
+              console.log( 'err' );
+              next(err);
+            } else {
+              console.log('saved');
+              // return 'foobar';
+            }
+          })
+          // add self to newFriend
+          .then(function () {
+            findUser({username: newFriend})
+            .then(function (foundNewFriendUser) {
+              console.log(foundNewFriendUser);
+              foundNewFriendUser.friends.push(self);
+
+              foundNewFriendUser.save(function (err) {
+                if (  err ) {
+                  next(err);
+                } else {
+                  user = foundNewFriendUser;
+                  res.send(user);
+                }
+              });
+            })
+            .fail(function (error) {
+              next(error);
+            });
+          })
+        }
+      };
+    })
+  }
 
 
 

@@ -2,7 +2,7 @@
 
 angular.module('bolt.controller', [])
 
-.controller('BoltController', function ($scope, $location, $window, $interval) {
+.controller('BoltController', function ($scope, $location, $window, $interval, Profile) {
   $scope.session = $window.localStorage;
   $scope.friendRequests = $window.localStorage.getItem('friendRequests').split(",");
 
@@ -40,6 +40,14 @@ angular.module('bolt.controller', [])
       $(".dropdown-button").dropdown();
     });
   };
+
+  $scope.handleFriendRequest = function (action, newFriend) {
+    Profile.handleFriendRequest(action, this.session.username, newFriend)
+    .then(function(data) {
+      console.log('data', data);
+    });
+  };
+
 
   // send a PR to the server, using func on profile factory
 });

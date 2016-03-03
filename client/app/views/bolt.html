@@ -5,8 +5,8 @@
   <li class="friendRequestEntry valign-wrapper" ng-repeat='user in friendRequests track by $index'>
   <div class='friendRequestEntryContent'>
   <span class="smallButton left">{{user}}</span>
-  <span class="smallButton right" ng-click="rejectFriendRequest">Reject</span>
-  <span class="smallButton right" ng-click="acceptFriendRequest">Accept</span>
+  <span class="smallButton right" ng-click="handleFriendRequest('reject', user)">Reject</span>
+  <span class="smallButton right" ng-click="handleFriendRequest('accept', user)">Accept</span>
   </div>
   </li>
 
