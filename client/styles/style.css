@@ -311,3 +311,11 @@ body{
   height: 0.6em;
   margin-right: 1em;
 }
+
+.identity {
+  color: rgba(237, 65, 42, 0.85);
+}
+
+#friendsListDropdown {
+  margin-top: 4.4em;
+}

@@ -1,3 +1,5 @@
+
+
 angular.module('bolt.controller', [])
 
 .controller('BoltController', function ($scope, $location, $window) {
@@ -18,4 +20,14 @@ angular.module('bolt.controller', [])
       $location.path('/multiLoad');
     }
   };
+
+  //when you click on the friends icon, trigger the dropdown menu dropdown
+  $scope.dropDown = function () {
+    $( document ).ready(function () {
+      $(".dropdown-button").dropdown();
+    });
+  };
+
+
 });
+
