@@ -43,6 +43,7 @@ angular.module('multirun.controller', [])
     return !$scope.waiting && !$scope.raceStarted;
   };
 
+  // Checks if other user has cancelled the race
   $scope.checkUserCancelled = function () {
     MultiGame.getGame(session.gameId)
       .then(function (game) {
@@ -58,12 +59,21 @@ angular.module('multirun.controller', [])
           if (statusUpdateLoop !== undefined) {
             $interval.cancel(statusUpdateLoop);
           }
+          $interval.cancel(checkCancelled);
           $location.path('/');
         }
       });
   };
 
   var checkCancelled = $interval($scope.checkUserCancelled, 300);
+
+  $scope.raceCancelledOrFinished = function () {
+    $interval.cancel(statusUpdateLoop);
+    $interval.cancel(checkCancelled);
+    $interval.cancel(stopCheck);
+    $interval.cancel(stopFinish);
+    MultiGame.updateGame(session.gameId, 'cancelled');
+  };
 
   // Activated when user presses the check button. In multiplayer game database
   // instance, the current user field is set to true
@@ -101,10 +111,9 @@ angular.module('multirun.controller', [])
       });
   };
 
-  $scope.endRaceBeforeStart = function () {
-    $interval.cancel(stopCheck);
-    MultiGame.updateGame(session.gameId, 'cancelled');
-  };
+  // $scope.endRaceBeforeStart = function () {
+  //   MultiGame.updateGame(session.gameId, 'cancelled');
+  // };
 
   // End multiplayer block
   /////////////////////////////////////////////////////////////////////////////////
@@ -240,10 +249,10 @@ angular.module('multirun.controller', [])
 
   // Stop geotracker upon canceling run
   // Does this make sure to stop tracking if they close the window? --> all scripts die when the browser is no longer interpreting them
-  $scope.$on('$destroy', function () {
-    console.log('destroyed!!!!!!!!!!');
-    $interval.cancel(statusUpdateLoop);
-    $interval.cancel(checkCancelled);
-    MultiGame.updateGame(session.gameId, 'cancelled');
-  });
+
+  // $scope.$on('$destroy', function () {
+  //   $interval.cancel(statusUpdateLoop);
+  //   $interval.cancel(checkCancelled);
+  //   MultiGame.updateGame(session.gameId, 'cancelled');
+  // });
 });

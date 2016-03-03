@@ -58,10 +58,10 @@
     <div class ="medalTimes" ng-show="raceStarted">
       <div class="botLink" >{{ timeUntilCurrentMedal.format('mm:ss') }} <img src="../assets/{{ currentMedal.toLowerCase() }}.png" class="medals"/><div class="botLink" ng-show="oppFinished"> &nbsp; Too slow! </div></div>
 
-      <a class="botLink right" href="#/"> x </a>
+      <a class="botLink right" href="#/" ng-click="raceCancelledOrFinished()"> x </a>
     </div>
     <div class ="medalTimes">
-      <a class="botLink left" href="#/" ng-show="!raceStarted" ng-click="endRaceBeforeStart()"> x </a>
+      <a class="botLink left" href="#/" ng-show="!raceStarted" ng-click="raceCancelledOrFinished()"> x </a>
       <div class="botLink clickable" ng-show="!raceStarted" ng-click="regenRace()"> <i class="small material-icons">replay</i> </div>
       <div class="botLink right clickable" ng-show="showCheck()" ng-click="ready()"> <i class="small material-icons">done</i> </div>
       <div class="botLink right" ng-show="waiting"> waiting </div>
