@@ -10,19 +10,59 @@ html, body {
 
 /*************** PROGRESS BAR *******************/
 
-.progressBar {
-  border: solid black;
-  border-radius: 10px;
-  height: 10px;
-  width: 50%;
+.progressBarContainer {
+  margin-top: 10px;
+  height: 15%;
+  position: relative;
 }
 
-.completed {
-  background-color: black;
+.progressBarUser {
+  border: solid black;
+  border-radius: 10px;
+  height: 100%;
+  width: 30%;
+  position: absolute;
+}
+
+.progressBarOpp {
+  border: solid black;
+  border-radius: 10px;
+  height: 100%;
+  width: 30%;
+  position: absolute;
+  right: 0;
+}
+
+.completedUser {
+  border-radius: 10px;
+  background-color: green;
   display: inline;
   float: left;
   height: 100%;
-/*  width: 60%;*/
+}
+
+.completedOpp {
+  border-radius: 10px;
+  background-color: red;
+  display: inline;
+  float: left;
+  height: 100%;
+}
+
+.progressInfoUser {
+  font-size: 14px;
+  color: white;
+  z-index: 1;
+  position: absolute;
+  left: 40%;
+}
+
+.progressInfoOpp {
+  font-size: 14px;
+  color: white;
+  z-index: 1;
+  position: absolute;
+  left: 40%;
 }
 
 /************************************************/
@@ -180,7 +220,7 @@ body{
 .medals {
   position: relative;
   display: inline-block;
-  height: 5vh;
+  height: 10vh;
   width: auto;
   top: 1vh;
   margin-left: 1vh;

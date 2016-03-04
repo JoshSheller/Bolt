@@ -17,14 +17,6 @@ angular.module('run.controller', [])
   var startLong;
   var FINISH_RADIUS = 0.0002; // miles?
 
-  // Math functions
-  var sqrt = Math.sqrt;
-  var floor = Math.floor;
-  var random = Math.random;
-  var pow2 = function (num) {
-    return Math.pow(num, 2);
-  };
-
   // Update run timer
   var updateTotalRunTime = function () {
     var secondsRan = moment().diff(startTime, 'seconds');
@@ -40,22 +32,22 @@ angular.module('run.controller', [])
   ];
 
   var setRunMessage = function () {
-    $scope.runMessage = messages[floor(random() * messages.length)] + "...";
+    $scope.runMessage = messages[Math.floor(Math.random() * messages.length)] + "...";
   };
 
   // Display random waiting message
-  $interval(setRunMessage, random() * 1000, messages.length);
+  $interval(setRunMessage, Math.random() * 1000, messages.length);
 
   $scope.startRun = function () {
     // Simulate finishing run for manual testing
     // setTimeout(finishRun, 4000); // simulate finishing run for manual testing
     startTime = moment();
     $scope.raceStarted = true;
-    statusUpdateLoop = $interval(updateStatus, 100);
+    statusUpdateLoop = $interval(updateStatus, 300);
     Run.setPointsInTime($scope);
     Run.setInitialMedalGoal($scope);
-    document.getElementById('map').style.height = "93vh";
-    document.getElementById('botNav').style.height = "7vh";
+    document.getElementById('map').style.height = "80vh";
+    document.getElementById('botNav').style.height = "20vh";
   };
 
   // Generate a new map or route after initial map has been loaded
@@ -131,31 +123,17 @@ angular.module('run.controller', [])
   // Check if user is in close proximity to destination
   var checkIfFinished = function () {
     if ($scope.destination && $scope.userLocation) {
-      var distRemaining = distBetween($scope.userLocation, $scope.destination);
-      if (distRemaining < 2) {
+      var distRemaining = Geo.distBetween($scope.userLocation, $scope.destination);
+      if (distRemaining < FINISH_RADIUS) {
+
         finishRun();
       }
     }
   };
 
-  // Calculate distance between two coordinates
-  var distBetween = function (loc1, loc2) {
-    return sqrt(pow2(loc1.lat - loc2.lat) + pow2(loc1.lng - loc2.lng));
-  };
-
-  // Calculate the percentage of the total route distance that the user has run
-  var calculatePercentageRouteRun = function (loc1, loc2) {
-    $scope.distanceRun += distBetween(loc1, loc2);
-    var percentageRun = Math.ceil(($scope.distanceRun / $scope.totalDistance) * 100);
-    return percentageRun;
-  };
-
-  // Update geographical location and timers
+  // Update geographical location and timers. Update progress bar via calculating percentage total route completed.
   var updateStatus = function () {
-    $scope.percentComplete++;
-    // var prevPosition = $scope.userLocation;
     Geo.updateCurrentPosition($scope);
-    // $scope.percentComplete = calculatePercentageRouteRun(prevPosition, $scope.userLocation);
     updateTotalRunTime();
     Run.updateGoalTimes($scope);
     checkIfFinished();

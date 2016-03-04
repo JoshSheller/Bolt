@@ -5,6 +5,14 @@ var MultiGameSchema = new mongoose.Schema({
   user1: Object,
   user2: Object,
   active: Boolean,
+  user1Progress: {
+    type: Number,
+    default: 0
+  },
+  user2Progress: {
+    type: Number,
+    default: 0
+  },
   id: {
     type: String,
     required: true

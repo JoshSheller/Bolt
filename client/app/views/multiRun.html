@@ -49,7 +49,19 @@
   </div>
 </div>
 </div>
-  <div id="botNav">
+  <div id="botNav" class="grey darken-3">
+  <!-- Progress Bar -->
+    <div class="progressBarContainer" ng-show="raceStarted">
+      <div class="progressBarUser">
+          <div class="completedUser" ng-style="{'width': percentComplete+'%'}"></div>
+          <span class="progressInfoUser">Progress: {{percentComplete + "%"}}</span>
+      </div>
+      <div class="progressBarOpp">
+          <div class="completedOpp" ng-style="{'width': oppPercentComplete+'%'}"></div>
+          <span class="progressInfoOpp">Progress: {{oppPercentComplete + "%"}}</span>
+      </div>
+    </div> 
+
     <div class ="medalTimes" style="font-size:14pt; text-align:left; text-indent:4px; height:4vh"> Racing against: {{ competitor }} </div>
     <div class ="medalTimes" ng-show="!raceStarted"> {{ totalDistance ? "Total Distance: " + totalDistance + " miles": "" }} </div>
     <div class ="medalTimes" ng-show="!raceStarted">{{ bronzeTime ? "Bronze: " + bronzeTime.format('mm:ss') : ""}}</div>

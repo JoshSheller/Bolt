@@ -22,6 +22,9 @@ angular.module('multirun.controller', [])
   // Code outside of this block is very similar to runController.js
   $scope.waiting = false;
   $scope.oppFinished = false;
+  $scope.distanceRun = 0;
+  $scope.percentComplete = 0;
+  $scope.oppPercentComplete = 0;
   var stopCheck;
   var stopFinish;
   var statusUpdateLoop;
@@ -132,11 +135,11 @@ angular.module('multirun.controller', [])
     // setTimeout(finishRun, Math.random() * 12000);
     startTime = moment();
     $scope.raceStarted = true;
-    statusUpdateLoop = $interval(updateStatus, 100);
+    statusUpdateLoop = $interval(updateStatus, 300);
     Run.setPointsInTime($scope);
     Run.setInitialMedalGoal($scope);
-    document.getElementById('map').style.height = "89vh";
-    document.getElementById('botNav').style.height = "11vh";
+    document.getElementById('map').style.height = "80vh";
+    document.getElementById('botNav').style.height = "20vh";
   };
 
   // Generate a new map or route after initial map has been loaded
@@ -225,7 +228,7 @@ angular.module('multirun.controller', [])
   // Check if user is in close proximity to destination
   var checkIfFinished = function () {
     if ($scope.destination && $scope.userLocation) {
-      var distRemaining = distBetween($scope.userLocation, $scope.destination);
+      var distRemaining = Geo.distBetween($scope.userLocation, $scope.destination);
       // Distance is in units of degrees latitude (~68 mi / deg lat)
       if (distRemaining < 0.0002 && !raceFinished) {
         raceFinished = true;
@@ -234,14 +237,19 @@ angular.module('multirun.controller', [])
     }
   };
 
-  // Calculate distance between two coordinates
-  var distBetween = function (loc1, loc2) {
-    return sqrt(pow2(loc1.lat - loc2.lat) + pow2(loc1.lng - loc2.lng));
-  };
+  var storeAndFetchProgress = function(progress) {
+    var field = userNum + "Progress";
+    MultiGame.updateGame(session.gameId, field, progress)
+      .then(function(game) {
+        var field = oppNum + "Progress";
+        $scope.oppPercentComplete = game.field;
+      })
+  }
 
 
   // Update geographical location and timers
   var updateStatus = function () {
+    storeAndFetchProgress($scope.percentComplete);
     Geo.updateCurrentPosition($scope);
     updateTotalRunTime();
     Run.updateGoalTimes($scope);
