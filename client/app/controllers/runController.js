@@ -3,7 +3,7 @@ angular.module('run.controller', [])
 .controller('RunController',
   function ($scope, $timeout, $interval, $window,
             $location, $route, Geo, Run, Profile) {
-
+  $scope.initialLocation;
   $scope.userLocation;
   $scope.destination;
   $scope.hasHours = true;
@@ -58,9 +58,13 @@ angular.module('run.controller', [])
   // Generates google map with current location marker and run route details
   var makeInitialMap = function () {
     Geo.makeInitialMap($scope);
+
+
   };
 
   makeInitialMap();
+
+
 
   // Handle end run conditions. Update user profile to reflect latest run.
   var finishRun = function () {
@@ -68,7 +72,7 @@ angular.module('run.controller', [])
     var medal = $scope.$parent.achievement = $scope.currentMedal;
 
     var date = new Date();
-
+    console.log("initial loc", $scope.initialLoc);
     var endLocation = {
       latitude: $scope.destination.lat,
       longitude: $scope.destination.long
@@ -78,10 +82,7 @@ angular.module('run.controller', [])
 
     var currentRunObject = {
       date: date,
-      startLocation: {
-        longitude: null,
-        latitude: null
-      },
+      startLocation: $scope.initialLoc,
       endLocation: {
         longitude: $scope.destination.long,
         latitude: $scope.destination.lat
@@ -124,6 +125,7 @@ angular.module('run.controller', [])
     if ($scope.destination && $scope.userLocation) {
       var distRemaining = Geo.distBetween($scope.userLocation, $scope.destination);
       if (distRemaining < FINISH_RADIUS) {
+
         finishRun();
       }
     }

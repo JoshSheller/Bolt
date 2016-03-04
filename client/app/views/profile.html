@@ -42,12 +42,12 @@
 </div>
 
 <div class="friendRequestContainer container center-align collection" ng-show="showFriendInputForm">
-      <div class="row">
-        <div class="input-field col s12">
-          <input ng-model="inputFriendUsername" placeholder="Friend" id="first_name" type="text" class="validate">
-        </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input ng-model="inputFriendUsername" placeholder="Friend" id="first_name" type="text" class="validate">
       </div>
-
+    </div>
+    <div class="row"> {{ error }} </div>
     <div class="row">
       <span class="waves-effect grey darken-3 waves-light btn"
             ng-click="friendRequest(inputFriendUsername)"

@@ -9,6 +9,9 @@ angular.module('bolt.services', [])
   var directionsService = new google.maps.DirectionsService();
   var directionsRenderer = new google.maps.DirectionsRenderer();
   var route;
+  var initialLat;
+  var initialLng;
+
 
   // Math functions
   var sqrt = Math.sqrt;
@@ -21,10 +24,18 @@ angular.module('bolt.services', [])
   // Create map around the users current location and their destination
   var makeInitialMap = function ($scope, destination) {
     navigator.geolocation.getCurrentPosition(function (position) {
+      console.log("latpositionis:", position.coords.latitude);
+      $scope.initialLoc = {
+        longitude: position.coords.latitude,
+        latitude : position.coords.longitude
+      };
+      console.log($scope.initialLoc);
+
         makeMap({
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }, $scope);
+
       }, function (err) {
         console.error(err);
       });
@@ -251,20 +262,35 @@ angular.module('bolt.services', [])
           friendUsername: friendUsername
         }
       }).then(function (res) {
-        if ( res.data === 'User does not exist' ) {
-          console.log( 'User does not exist' );
-        } else if ( res.data === 'You have already sent this user a friend request' ) {
-          console.log( 'You have already sent this person a friend request' );
+        if ( res.data === 'User does not exist' || res.data === 'You have already sent this user a friend request') {
+          return res.data;
         } else {
           console.log( 'Friend request made' );
+          return res;
         }
+      });
+    };
+
+    var handleFriendRequest = function (action, self, newFriend) {
+      return $http({
+        method: 'POST',
+        url: '/api/users/handleFriendRequestAction',
+        data: {
+          action: action,
+          self: self,
+          newFriend: newFriend
+        }
+      }).then(function (res) {
+        console.log('res');
+        return res;
       });
     };
 
   return {
     updateUser: updateUser,
     getUser: getUser,
-    sendFriendRequest: sendFriendRequest
+    sendFriendRequest: sendFriendRequest,
+    handleFriendRequest: handleFriendRequest
   };
 })
 
