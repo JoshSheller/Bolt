@@ -105,6 +105,7 @@ angular.module('bolt.services', [])
     return percentageRun;
   };
 
+  // Updates the current user position, and calculates the percentage of the total route completed.
   var updateCurrentPosition = function ($scope) {
     if ($scope.userLocation) {
       var prevLocation = {

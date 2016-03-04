@@ -10,11 +10,18 @@ html, body {
 
 /*************** PROGRESS BAR *******************/
 
+.progressBarContainer {
+  margin-top: 10px;
+  height: 15%;
+  position: relative;
+}
+
 .progressBar {
   border: solid black;
   border-radius: 10px;
-  height: 10px;
-  width: 50%;
+  height: 100%;
+  width: 30%;
+  position: absolute;
 }
 
 .completed {
@@ -22,7 +29,17 @@ html, body {
   display: inline;
   float: left;
   height: 100%;
-/*  width: 60%;*/
+  /*position: absolute;*/
+  left: 0;
+  /*width: 90%;*/
+}
+
+.progressInfo {
+  font-size: 14px;
+  color: white;
+  z-index: 1;
+  position: absolute;
+  left: 40%;
 }
 
 /************************************************/
@@ -180,7 +197,7 @@ body{
 .medals {
   position: relative;
   display: inline-block;
-  height: 5vh;
+  height: 10vh;
   width: auto;
   top: 1vh;
   margin-left: 1vh;

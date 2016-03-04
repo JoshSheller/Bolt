@@ -46,8 +46,8 @@ angular.module('run.controller', [])
     statusUpdateLoop = $interval(updateStatus, 100);
     Run.setPointsInTime($scope);
     Run.setInitialMedalGoal($scope);
-    document.getElementById('map').style.height = "93vh";
-    document.getElementById('botNav').style.height = "7vh";
+    document.getElementById('map').style.height = "80vh";
+    document.getElementById('botNav').style.height = "20vh";
   };
 
   // Generate a new map or route after initial map has been loaded
