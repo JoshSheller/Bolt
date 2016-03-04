@@ -39,7 +39,11 @@ module.exports = {
     var id = req.body.id;
     var field = req.body.field;
     var updateQuery = {$set: {}};
-    updateQuery.$set[field] = true;
+    if (field === "user1Progress" || field === "user2Progress") {
+      updateQuery.$set[field] = req.body.progress;
+    } else {
+      updateQuery.$set[field] = true;
+    }
     updateGame({id: id}, updateQuery).then(function (game) {
       res.send(201, game);
     });

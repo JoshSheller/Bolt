@@ -43,7 +43,7 @@ angular.module('run.controller', [])
     // setTimeout(finishRun, 4000); // simulate finishing run for manual testing
     startTime = moment();
     $scope.raceStarted = true;
-    statusUpdateLoop = $interval(updateStatus, 100);
+    statusUpdateLoop = $interval(updateStatus, 300);
     Run.setPointsInTime($scope);
     Run.setInitialMedalGoal($scope);
     document.getElementById('map').style.height = "80vh";

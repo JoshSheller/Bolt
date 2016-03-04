@@ -16,7 +16,7 @@ html, body {
   position: relative;
 }
 
-.progressBar {
+.progressBarUser {
   border: solid black;
   border-radius: 10px;
   height: 100%;
@@ -24,17 +24,40 @@ html, body {
   position: absolute;
 }
 
-.completed {
-  background-color: black;
+.progressBarOpp {
+  border: solid black;
+  border-radius: 10px;
+  height: 100%;
+  width: 30%;
+  position: absolute;
+  right: 0;
+}
+
+.completedUser {
+  border-radius: 10px;
+  background-color: green;
   display: inline;
   float: left;
   height: 100%;
-  /*position: absolute;*/
-  left: 0;
-  /*width: 90%;*/
 }
 
-.progressInfo {
+.completedOpp {
+  border-radius: 10px;
+  background-color: red;
+  display: inline;
+  float: left;
+  height: 100%;
+}
+
+.progressInfoUser {
+  font-size: 14px;
+  color: white;
+  z-index: 1;
+  position: absolute;
+  left: 40%;
+}
+
+.progressInfoOpp {
   font-size: 14px;
   color: white;
   z-index: 1;

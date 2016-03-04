@@ -211,7 +211,6 @@ angular.module('bolt.services', [])
     setInitialMedalGoal: setInitialMedalGoal,
     updateGoalTimes: updateGoalTimes
   };
-
 })
 
 // Update and retrieve user information
@@ -284,14 +283,16 @@ angular.module('bolt.services', [])
       });
     },
 
-    updateGame : function (id, field) {
+    // Optional progess argument, hardcoded for handling multiRun progress bar updating
+    updateGame : function (id, field, progress) {
       //field is equal to either user1 or user2
       return $http({
         method: 'POST',
         url: '/api/games/update',
         data: {
           id: id,
-          field: field
+          field: field,
+          progress: progress
         }
       }).then(function (res) {
         return res;
