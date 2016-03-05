@@ -89,16 +89,33 @@ angular.module('bolt.services', [])
         $scope.totalDistance = totalDistance;
 
         // Change this to pull the users speed from their profile
-        var userMinPerMile = 10;
-        var hours = Math.floor(userMinPerMile * totalDistance / 60);
-        var minutes = userMinPerMile * totalDistance;
-        var seconds = minutes * 60;
+          // silver is the time matching the users average mile speed
+        var userAverageMile = 10;
+        var totalSilverMinutes = userAverageMile * totalDistance;
+        var totalBronzeMinutes = totalSilverMinutes * 1.1;
+        var totalGoldMinutes = totalSilverMinutes * 0.9;
 
-        // Display projected time in a freindly format
-        $scope.hasHours = hours > 0;
-        $scope.goldTime = moment().second(seconds * 0.9).minute(minutes * 0.9).hour(hours * 0.9);
-        $scope.silverTime = moment().second(seconds * 1.0).minute(minutes * 1.0).hour(hours * 1.0);
-        $scope.bronzeTime = moment().second(seconds * 1.1).minute(minutes * 1.1).hour(hours * 1.1);
+        var bronzeHours = Math.floor(totalBronzeMinutes / 60);
+        var bronzeMinutes = Math.floor(totalBronzeMinutes % 60);
+        var bronzeSeconds = ((totalBronzeMinutes % 60) - bronzeMinutes) * 60;
+
+        var silverHours = Math.floor(totalSilverMinutes / 60);
+        var silverMinutes = Math.floor(totalSilverMinutes % 60);
+        var silverSeconds = ((totalSilverMinutes % 60) - silverMinutes) * 60;
+
+        var goldHours = Math.floor(totalGoldMinutes / 60);
+        var goldMinutes = Math.floor(totalGoldMinutes % 60);
+        var goldSeconds = ((totalGoldMinutes % 60) - goldMinutes) * 60;
+
+        // Display projected time in a friendly format
+        $scope.goldHasHours = goldHours > 0;
+        $scope.silverHasHours = silverHours > 0;
+        $scope.bronzeHasHours = bronzeHours > 0;
+
+        $scope.goldTime = moment().second(goldSeconds).minute(goldMinutes).hour(goldHours);
+        $scope.silverTime = moment().second(silverSeconds).minute(silverMinutes).hour(silverHours);
+        $scope.bronzeTime = moment().second(bronzeSeconds).minute(bronzeMinutes).hour(bronzeHours);
+
         $scope.$digest();
       });
     };

@@ -6,7 +6,9 @@ angular.module('run.controller', [])
   $scope.initialLocation;
   $scope.userLocation;
   $scope.destination;
-  $scope.hasHours = true;
+  $scope.goldHasHours = true;
+  $scope.silverHasHours = true;
+  $scope.bronzeHasHours = true;
   $scope.distanceRun = 0;
   $scope.percentComplete = 0;
 
